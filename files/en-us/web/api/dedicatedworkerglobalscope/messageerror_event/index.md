@@ -10,6 +10,7 @@ tags:
   - messageerror
 browser-compat: api.DedicatedWorkerGlobalScope.messageerror_event
 ---
+
 {{APIRef}}
 
 The `messageerror` event is fired on a {{domxref('DedicatedWorkerGlobalScope')}} object when it receives a message that can't be deserialized.
@@ -28,7 +29,7 @@ onmessageerror = (event) => { };
 
 ## Event type
 
-An {{domxref("MessageEvent")}}. Inherits from {{domxref("Event")}}.
+A {{domxref("MessageEvent")}}. Inherits from {{domxref("Event")}}.
 
 {{InheritanceDiagram("MessageEvent")}}
 

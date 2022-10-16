@@ -12,6 +12,7 @@ tags:
   - tests
   - unit tests
 ---
+
 {{LearnSidebar}}{{PreviousMenuNext("Learn/Server-side/Django/Forms", "Learn/Server-side/Django/Deployment", "Learn/Server-side/Django")}}
 
 As websites grow they become harder to test manually. Not only is there more to test, but, as interactions between components become more complex, a small change in one area can impact other areas, so more changes will be required to ensure everything keeps working and errors are not introduced as more changes are made. One way to mitigate these problems is to write automated tests, which can easily and reliably be run every time you make a change. This tutorial shows how to automate _unit testing_ of your website using Django's test framework.
@@ -480,6 +481,8 @@ The rest of the functions test that the form is valid for renewal dates just ins
 >
 > We also need to validate that the correct errors are raised if the form is invalid, however this is usually done as part of view processing, so we'll take care of that in the next section.
 
+> **Warning:** If you use the [ModelForm](/en-US/docs/Learn/Server-side/Django/Forms#modelforms) class `RenewBookModelForm(forms.ModelForm)` instead of class `RenewBookForm(forms.Form)`, then the form field name would be **'due_back'** instead of **'renewal_date'**.
+
 That's all for forms; we do have some others, but they are automatically created by our generic class-based editing views, and should be tested there! Run the tests and confirm that our code still passes!
 
 ### Views
@@ -875,8 +878,6 @@ Add the next test method, as shown below. This checks that the initial date for 
         date_3_weeks_in_future = datetime.date.today() + datetime.timedelta(weeks=3)
         self.assertEqual(response.context['form'].initial['renewal_date'], date_3_weeks_in_future)
 ```
-
-> **Warning:** If you use the form class `RenewBookModelForm(forms.ModelForm)` instead of class `RenewBookForm(forms.Form)`, then the form field name is **'due_back'** instead of **'renewal_date'**.
 
 The next test (add this to the class too) checks that the view redirects to a list of all borrowed books if renewal succeeds. What differs here is that for the first time we show how you can `POST` data using the client. The post _data_ is the second argument to the post function, and is specified as a dictionary of key/values.
 

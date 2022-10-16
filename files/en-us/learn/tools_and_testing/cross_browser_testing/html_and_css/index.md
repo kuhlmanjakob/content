@@ -13,6 +13,7 @@ tags:
   - cross browser
   - linting
 ---
+
 {{LearnSidebar}}{{PreviousMenuNext("Learn/Tools_and_testing/Cross_browser_testing/Testing_strategies","Learn/Tools_and_testing/Cross_browser_testing/JavaScript", "Learn/Tools_and_testing/Cross_browser_testing")}}
 
 With the scene set, we'll now look specifically at the common cross-browser problems you will come across in HTML and CSS code, and what tools can be used to prevent problems from happening, or fix problems that occur. This includes linting code, handling CSS prefixes, using browser dev tools to track down problems, using polyfills to add support into browsers, tackling responsive design problems, and more.
@@ -126,10 +127,16 @@ For example:
 
 ```html
 <video id="video" controls preload="metadata" poster="img/poster.jpg">
-  <source src="video/tears-of-steel-battle-clip-medium.webm" type="video/webm">
+  <source
+    src="video/tears-of-steel-battle-clip-medium.webm"
+    type="video/webm" />
   <!-- Offer download -->
-  <p>Your browser does not support WebM video; here is a link to
-  <a href="video/tears-of-steel-battle-clip-medium.mp4">view the video directly</a></p>
+  <p>
+    Your browser does not support WebM video; here is a link to
+    <a href="video/tears-of-steel-battle-clip-medium.mp4"
+      >view the video directly</a
+    >
+  </p>
 </video>
 ```
 
@@ -143,11 +150,11 @@ The following example shows date and time inputs:
 <form>
   <div>
     <label for="date">Enter a date:</label>
-    <input id="date" type="date">
+    <input id="date" type="date" />
   </div>
   <div>
     <label for="time">Enter a time:</label>
-    <input id="time" type="time">
+    <input id="time" type="time" />
   </div>
 </form>
 ```
@@ -178,8 +185,8 @@ button {
 
   background-color: #ff0000;
   background-color: rgba(255 0 0 / 1);
-  box-shadow: inset 1px 1px 3px rgba(255 255 255 / 0.4),
-              inset -1px -1px 3px rgba(0 0 0 / 0.4);
+  box-shadow: inset 1px 1px 3px rgba(255 255 255 / 0.4), inset -1px -1px 3px
+      rgba(0 0 0 / 0.4);
 }
 
 button:hover {
@@ -187,8 +194,8 @@ button:hover {
 }
 
 button:active {
-  box-shadow: inset 1px 1px 3px rgba(0 0 0 / 0.4),
-              inset -1px -1px 3px rgba(255 255 255 / 0.4);
+  box-shadow: inset 1px 1px 3px rgba(0 0 0 / 0.4), inset -1px -1px 3px rgba(255
+          255 255 / 0.4);
 }
 ```
 
@@ -224,27 +231,24 @@ form > #date
 
 Another set of problems comes with CSS prefixes — these are a mechanism originally used to allow browser vendors to implement their own version of a CSS (or JavaScript) feature while the technology is in an experimental state, so they can play with it and get it right without conflicting with other browser's implementations, or the final unprefixed implementations. So for example:
 
-- Mozilla uses `-moz-`
-- Chrome/Opera/Safari use `-webkit-`
-- Microsoft uses `-ms-`
+- Firefox uses `-moz-`
+- Chrome/Edge/Opera/Safari use `-webkit-`
+
+More prefixes were used in the past: Internet Explorer and early versions of Edge used `-ms-`, and old versions of Opera used `-o`.
 
 Here's some examples:
 
 ```css
 -webkit-transform: rotate(90deg);
-
-background-image: -moz-linear-gradient(left ,green, yellow);
-background-image: -webkit-gradient(linear, left center, right center, from(green), to(yellow));
-background-image: linear-gradient(to right, green, yellow);
+-moz-transform: rotate(90deg);
+transform: rotate(90deg);
 ```
 
-While none of these properties requires a prefix, you may encounter this old CSS in a codebase. The first line shows a {{cssxref("transform")}} property with a `-webkit-` prefix — this was needed to make transforms work in older versions of Safari and Chrome until the prefix-free feature was supported.
+While the `transform` property does not require a prefix, you may encounter this old CSS in a codebase. The first line shows the {{cssxref("transform")}} property with a `-webkit-` prefix — this was needed to make transforms work in older versions of Safari and Chrome until the prefix-free feature was supported.
 
-The last three lines show three different versions of the [`linear-gradient()`](/en-US/docs/Web/CSS/gradient/linear-gradient) function, which is originally how linear gradient were written:
+The second line has a `-moz-` prefix, which is also no longer needed. The third one has no prefix. This third version shows the final version of the syntax supported in all evergreen browsers.
 
-The first one has a `-moz-` prefix, the second a `-webkit-` prefix, and the third one has no prefix. This third version shows the final version of the syntax supported in all evergreen browsers.
-
-Prefixed features were never supposed to be used in production websites — they are subject to change or removal without warning, and cause cross browser issues. This is particularly a problem when developers decide to only use say, the `-webkit-` version of a property — meaning that the site won't work in other browsers. This actually happened so much that other browsers implemented `-webkit-` prefixed versions of several CSS properties. While browsers still support some prefixed property names, property values, and pseudo classes, now experimental features are put behind flags so developers can test them during development.
+Prefixed features were never supposed to be used in production websites — they are subject to change or removal without warning and cause cross-browser issues. This is particularly a problem, for example, when developers decide to use only the `-webkit-` version of a property, which implied that the site won't work in other browsers. This actually happened so much that other browser vendors implemented `-webkit-` prefixed versions of several CSS properties. While browsers still support some prefixed property names, property values, and pseudo classes, now experimental features are put behind flags so that web developers can test them during development.
 
 If you insist on using prefixed features, make sure you use the right ones. You can look up what browsers require prefixes on MDN reference pages, and sites like [caniuse.com](https://caniuse.com/). If you are unsure, you can also find out by doing some testing directly in browsers.
 
@@ -255,16 +259,16 @@ Try this simple example:
 3. Look for a feature you can use to select that element. For example, at the time of writing, the main Google logo had an ID of `hplogo`.
 4. Store a reference to this element in a variable, for example:
 
-    ```js
-    const test = document.getElementById('hplogo');
-    ```
+   ```js
+   const test = document.getElementById("hplogo");
+   ```
 
 5. Now try to set a new value for the CSS property you are interested in on that element; you can do this using the [style](/en-US/docs/Web/API/HTMLElement/style) property of the element, for example try typing these into the JavaScript console:
 
-    ```js
-    test.style.transform = 'rotate(90deg)'
-    test.style.webkitTransform = 'rotate(90deg)'
-    ```
+   ```js
+   test.style.transform = "rotate(90deg)";
+   test.style.webkitTransform = "rotate(90deg)";
+   ```
 
 As you start to type the property name representation after the second dot (note that in JavaScript, CSS property names are written in lower camel case, not hyphenated), the JavaScript console should begin to autocomplete the names of the properties that exist in the browser and match what you've written so far. This is useful for finding out what versions of the property are implemented in that browser.
 

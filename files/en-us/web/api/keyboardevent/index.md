@@ -18,6 +18,7 @@ tags:
   - user input
 browser-compat: api.KeyboardEvent
 ---
+
 {{APIRef("UI Events")}}
 
 **`KeyboardEvent`** objects describe a user interaction with the keyboard; each event describes a single interaction between the user and a key (or combination of a key with modifier keys) on the keyboard. The event type ({{domxref("Element/keydown_event", "keydown")}}, {{domxref("Element/keypress_event", "keypress")}}, or {{domxref("Element/keyup_event", "keyup")}}) identifies what kind of keyboard activity occurred.
@@ -116,13 +117,13 @@ The following constants identify which part of the keyboard the key event origin
   </tbody>
 </table>
 
-## Properties
+## Instance properties
 
 _This interface also inherits properties of its parents, {{domxref("UIEvent")}} and {{domxref("Event")}}._
 
 - {{domxref("KeyboardEvent.altKey")}} {{ReadOnlyInline}}
 
-  - : Returns a boolean value that is `true` if the  <kbd>Alt</kbd> (<kbd>Option</kbd> or <kbd>⌥</kbd> on macOS) key was active when the key event was generated.
+  - : Returns a boolean value that is `true` if the <kbd>Alt</kbd> (<kbd>Option</kbd> or <kbd>⌥</kbd> on macOS) key was active when the key event was generated.
 
 - {{domxref("KeyboardEvent.code")}} {{ReadOnlyInline}}
 
@@ -156,7 +157,7 @@ _This interface also inherits properties of its parents, {{domxref("UIEvent")}} 
 
   - : Returns a boolean value that is `true` if the <kbd>Shift</kbd> key was active when the key event was generated.
 
-## Methods
+## Instance methods
 
 _This interface also inherits methods of its parents, {{domxref("UIEvent")}} and {{domxref("Event")}}._
 
@@ -258,21 +259,6 @@ In some GTK-based environments, auto-repeat dispatches a native key-up event aut
 8. `keyup`
 
 In these environments, unfortunately, there's no way for web content to tell the difference between auto-repeating keys and keys that are just being pressed repeatedly.
-
-#### Auto-repeat handling prior to Gecko 5.0
-
-Before Gecko 5.0 {{geckoRelease('5.0')}}, keyboard handling was less consistent across platforms.
-
-- Windows
-  - : Auto-repeat behavior is the same as in Gecko 4.0 and later.
-- Mac
-  - : After the initial keydown event, only keypress events are sent until the keyup event occurs; the inter-spaced keydown events are not sent.
-- Linux
-  - : The event behavior depends on the specific platform. It will either behave like Windows or Mac depending on what the native event model does.
-
-> **Note:** Manually firing an event does _not_ generate the default action associated with that event.
-> For example, manually firing a key event does not cause that letter to appear in a focused text input.
-> In the case of UI events, this is important for security reasons, as it prevents scripts from simulating user actions that interact with the browser itself.
 
 ## Example
 

@@ -17,7 +17,9 @@ browser-compat:
   - api.FileSystemFileHandle
   - api.FileSystemDirectoryHandle
   - api.FileSystemWritableFileStream
+  - api.Window.showOpenFilePicker
 ---
+
 {{securecontext_header}}{{DefaultAPISidebar("File System Access API")}}
 
 The File System Access API allows read, write and file management capabilities.
